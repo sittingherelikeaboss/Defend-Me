@@ -1,15 +1,2 @@
-/client/node_modules
-
-/flask-server/venv/
-/flask-server/*.pyc
-/flask-server/__pycache__/
-
-/flask-server/instance/
-
-/flask-server/.pytest_cache/
-/flask-server/.coverage
-/flask-server/htmlcov/
-
-/flask-server/dist/
-/flask-server/build/
-/flask-server/*.egg-info/
+client/node_modules/
+flask-server/venv/
