@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, send_from_directory
 import sqlite3
 import os
 
@@ -9,9 +9,10 @@ app = Flask(__name__)
 def members():
     return {"members": ["Member 1", "Member 2", "Member 3"]}
 
+# Serve React app
 @app.route("/")
-def index():
-    return "Backend Homepage of Defend Me"
+def serve():
+    return send_from_directory(app.static_folder, 'index.html')
 
 @app.errorhandler(404)
 def not_found(e):
