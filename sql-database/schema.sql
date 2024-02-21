@@ -1,0 +1,35 @@
+DROP TABLE IF EXISTS employee;
+DROP TABLE IF EXISTS device;
+DROP TABLE IF EXISTS scan;
+
+CREATE TABLE employee (
+  employee_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  email TEXT UNIQUE NOT NULL,
+  password TEXT NOT NULL,
+  deactivated BOOLEAN NULL,
+  created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_date TIMESTAMP NULL DEFAULT NULL
+);
+
+CREATE TABLE device (
+  device_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  model TEXT NOT NULL,
+  unique_device_identifier TEXT NOT NULL,
+  employee_id INTEGER NULL,
+  created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_date TIMESTAMP NULL DEFAULT NULL,
+  FOREIGN KEY (employee_id) REFERENCES employee (employee_id)
+);
+
+CREATE TABLE scan (
+  scan_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  os_version TEXT NOT NULL,
+  app_version TEXT NOT NULL,
+  secure BOOLEAN NULL,
+  threats TEXT NULL DEFAULT NULL,
+  device_id INTEGER NOT NULL,
+  created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_date TIMESTAMP NULL DEFAULT NULL,
+  FOREIGN KEY (device_id) REFERENCES device (device_id)
+);
