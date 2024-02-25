@@ -1,0 +1,93 @@
+.main-header {
+  display: block;
+  padding: 10px 10px;
+  color: #fff;
+  backdrop-filter: blur(30px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.statistics {
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(30px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 20px;
+  padding: 15px 10px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.statistics h2 {
+  text-align: center;
+}
+
+.statistics th {
+  padding: 5px;
+  width: 35%;
+}
+
+.statistics td {
+  padding: 5px;
+  border: 1px solid #fff;
+  margin-bottom: 20px;
+}
+
+.compromised-devices-header {
+  display: block;
+  padding: 10px 10px;
+  color: #fff;
+  backdrop-filter: blur(30px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  text-align: center;
+}
+
+.compromised-devices-table {
+  overflow-y: scroll;
+  height: 300px;
+  display: block;
+  padding: 15px 10px;
+  color: #fff;
+  backdrop-filter: blur(30px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  margin-bottom: 20px;
+}
+
+.compromised-devices-table table td {
+  padding: 5px;
+  border: 1px solid #fff;
+}
+
+.employee-header {
+  display: block;
+  padding: 10px 10px;
+  color: #fff;
+  backdrop-filter: blur(30px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  text-align: center;
+}
+
+.employee-table {
+  overflow-y: scroll;
+  height: 300px;
+  display: block;
+  padding: 15px 10px;
+  color: #fff;
+  backdrop-filter: blur(30px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+}
+
+.employee-table table td {
+  padding: 5px;
+  border: 1px solid #fff;
+}
