@@ -40,14 +40,14 @@ npm install
 3. Run the commands below to start the backend server.
 
 ```
-cd /flask-server
+cd flask-server/
 python3 server.py
 ```
 
 4. Run the commands below to start the frontend in another terminal.
 
 ```
-cd client
+cd react-client/
 npm start
 ```
 
@@ -65,7 +65,13 @@ python3 --version
 
 If you do not have Python, go ahead and install it from [here](https://www.python.org/).
 
-6. If you have Python3 installed, run the commands below to initialise the database.
+6. You will need these following Python packages. Run the following command to install them.
+
+```
+pip install sqlite Faker
+```
+
+7. If you have Python3 installed, run the commands below to initialise the database with seeded data.
 
 ```
 cd sql-database
@@ -73,9 +79,11 @@ cd sql-database
 
 ```
 python init_db.sql
+```
 
 or
 
+```
 python3 init_db.sql
 ```
 
