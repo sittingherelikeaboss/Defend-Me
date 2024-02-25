@@ -48,6 +48,9 @@ def getEmployeeByEmail(email):
                     })
     return response
 
+'''
+Returns a list of employees as an array of objects from SQLite
+'''
 @app.route("/employee", methods=['GET'])
 def listAllEmployees():
     req_args = request.view_args
@@ -70,8 +73,9 @@ def listAllEmployees():
 
     if (data and len(data) > 0):
         response = jsonify({ # TODO: I wonder how to improve these to have an object definition interface
-                        'status': 200,
-                        'employee': employees
+                        'object': 'list',
+                        'url': '/employee',
+                        'data': employees,
                     })
     else:
         response = jsonify({
@@ -102,8 +106,9 @@ def listAllDevices():
         })
     if (data and len(data) > 0):
         response = jsonify({ # TODO: I wonder how to improve these to have an object definition interface
-                        'status': 200,
-                        'scans': devices
+                        'object': 'list',
+                        'url': '/device',
+                        'data': devices
                     })
     else:
         response = jsonify({
@@ -135,8 +140,9 @@ def listAllScans():
         })
     if (data and len(data) > 0):
         response = jsonify({ # TODO: I wonder how to improve these to have an object definition interface
-                        'status': 200,
-                        'scans': scans
+                                                'object': 'list',
+                        'url': '/scans',
+                        'data': scans
                     })
     else:
         response = jsonify({
