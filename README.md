@@ -104,3 +104,4 @@ python3 init_db.sql
 ## Credits
 
 1. [Deep AI Image Generator](https://deepai.org/machine-learning-model/text2img) for the login screen background.
+2. [React Icons](https://react-icons.github.io/react-icons/) for icons used within the website.
