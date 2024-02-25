@@ -1,4 +1,4 @@
-# Defend Me
+# ⚔️ Defend Me
 
 ## Table of Contents
 
@@ -8,6 +8,7 @@
 3. [Developer Instructions](#developer-instructions)
     - [Local](#local)
         - [Windows (Bash)](#windows-bash)
+4. [Credits](#credits)
 
 ## Description
 
@@ -99,3 +100,7 @@ python3 init_db.sql
 #### MacOS
 
 🚧 Work in progress 🚧
+
+## Credits
+
+1. [Deep AI Image Generator](https://deepai.org/machine-learning-model/text2img) for the login screen background.
