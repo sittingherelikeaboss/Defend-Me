@@ -1,9 +1,6 @@
-import "./App.css";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { LoginForm } from "./Components/LoginForm/LoginForm";
+import React from "react";
 
-function App() {
+export const Dashboard = () => {
   const [data, setData] = useState([{}]);
   useEffect(() => {
     axios
@@ -37,22 +34,20 @@ function App() {
 
   return (
     <>
-    <div>
-      <LoginForm />
-    </div>
+      <div style={styles.container}>
+        <h1>👋 Hello World LLC Dashboard</h1>
+        <h2>Employee List</h2>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>
+        {data.map((item, index) => (
+          <tr key={index}>
+            <td>{item.name}</td>
+            <td>{item.email}</td>
+          </tr>
+        ))}
+      </div>
     </>
   );
-}
-
-// Styling
-const styles = {
-  container: {
-    backgroundColor: "#fff9c4",
-    padding: "10px 50px 60px 50px",
-  },
-  listItem: {
-    borderTop: "1px dashed #ccc",
-  },
 };
-
-export default App;
