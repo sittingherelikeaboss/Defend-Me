@@ -53,7 +53,7 @@ export const LoginForm = () => {
   };
 
   return (
-    <div className="wrapper">
+    <div className="login-wrapper">
       <form onSubmit={handleSubmit(onSubmit)}>
         <h1>⚔️ Defend Me</h1>
         <div className="input-box">
