@@ -1,18 +1,16 @@
 from flask import Flask, request, jsonify, render_template, send_from_directory
 import sqlite3
 import os
+import bcrypt
+import serverUtils
+import datetime
 
 app = Flask(__name__)
-
-# Members API route
-@app.route("/members")
-def members():
-    return {"members": ["Member 1", "Member 2", "Member 3"]}
 
 # Serve React app
 @app.route("/")
 def serve():
-    return send_from_directory(app.static_folder, 'index.html')
+    return send_from_directory('.', 'index.html')
 
 @app.errorhandler(404)
 def not_found(e):
@@ -32,8 +30,7 @@ def getEmployeeByEmail(email):
     data = cur.fetchone()
     if (data and len(data) > 0):
         response = jsonify({ # TODO: I wonder how to improve these to have an object definition interface
-                        'status': 200,
-                        'employee': {
+                        'data': {
                             'employee_id': data[0],
                             'name': data[1],
                             'email': data[2],
@@ -45,6 +42,44 @@ def getEmployeeByEmail(email):
         response = jsonify({
                         'status': 404,
                         'message': 'No employee found with provided email address.'
+                    })
+    return response
+
+'''
+Validates an employee email and password (credentials).
+
+Returns true when employee exists and password matches.
+'''
+@app.route("/employee/validate/<email>", methods=['GET'])
+def validateEmployeeCredentials(email):
+    req_args = request.view_args
+    password = request.args.get('password')
+    print('req_args: ', req_args)
+
+    db_file = 'database.db'
+    os.chdir('../sql-database/')
+    db_connection = sqlite3.connect(os.path.join(os.path.abspath(os.curdir), db_file))
+
+    cur = db_connection.cursor()
+    cur.execute("SELECT password FROM employee WHERE email = '%s'" % email)
+    db_connection.commit()
+    data = cur.fetchone()
+    
+    # Compare hashed password
+    passwordMatches = False
+    bytes = password.encode('utf-8') 
+    hashedDbPassword = data[0]
+    if (bcrypt.checkpw(bytes, hashedDbPassword)):
+        passwordMatches = True
+    
+    if (data and len(data) > 0 and passwordMatches):
+        response = jsonify({
+                        'passwordMatches': True
+                    })
+    else:
+        response = jsonify({ # TODO: Propagate these error messages
+                        'passwordMatches': False,
+                        'message': 'Invalid password or no password found with provided email address.'
                     })
     return response
 
@@ -61,14 +96,16 @@ def listAllEmployees():
     db_connection = sqlite3.connect(os.path.join(os.path.abspath(os.curdir), db_file))
 
     cur = db_connection.cursor()
-    cur.execute("SELECT employee_id, name, email FROM employee")
+    cur.execute("SELECT employee_id, name, email, created_date, updated_date FROM employee")
     data = cur.fetchall()
     employees = []
     for i in data:
         employees.append({
             'employee_id': i[0],
             'name': i[1],
-            'email': i[2]
+            'email': i[2],
+            'created_date': i[3],
+            'updated_date': i[4]
         })
 
     if (data and len(data) > 0):
@@ -76,6 +113,48 @@ def listAllEmployees():
                         'object': 'list',
                         'url': '/employee',
                         'data': employees,
+                    })
+    else:
+        response = jsonify({
+                        'status': 404,
+                        'message': 'No employee found with provided email address.'
+                    })
+        
+    db_connection.close()
+    return response
+
+'''
+Creates an Employee in the database.
+'''
+@app.route("/employee", methods=['POST'])
+def createEmployee():
+    db_file = 'database.db'
+    os.chdir('../sql-database/')
+    db_connection = sqlite3.connect(os.path.join(os.path.abspath(os.curdir), db_file))
+
+    cur = db_connection.cursor()
+    parsedBody = request.json
+    name = parsedBody["name"]
+    email = parsedBody["email"]
+    password = parsedBody["password"]
+    
+    cur.execute("INSERT INTO employee (name, email, password, deactivated, created_date) VALUES (?, ?, ?, ?, ?)",
+                    (name, email.lower(), serverUtils.encrpytPassword(password), False, datetime.datetime.now().isoformat())
+                    )
+    
+    db_connection.commit()
+    
+    cur.execute("SELECT employee_id, name, email, created_date FROM employee WHERE email = '%s'" % email)
+    data = cur.fetchone()    
+    
+    db_connection.close()
+
+    if (data and len(data) > 0):
+        response = jsonify({ # TODO: I wonder how to improve these to have an object definition interface
+                        "employee_id": data[0],
+                        "name": data[1],
+                        "email": data[2],
+                        "created_date": data[3]
                     })
     else:
         response = jsonify({
@@ -119,15 +198,17 @@ def listAllDevices():
 
 @app.route("/scans", methods=['GET'])
 def listAllScans():
-    req_args = request.view_args
-    print('req_args: ', req_args)
-
     db_file = 'database.db'
     os.chdir('../sql-database/')
     db_connection = sqlite3.connect(os.path.join(os.path.abspath(os.curdir), db_file))
 
+    sql = "SELECT scan_id, os_version, app_version, secure, threats, device_id, created_date FROM scan"
+    secure = request.args.get('secure')
+    if (len(secure) > 0):
+        sql = sql + " WHERE secure = %s" % secure
+
     cur = db_connection.cursor()
-    cur.execute("SELECT scan_id, os_version, app_version, threats, device_id FROM scan")
+    cur.execute(sql)
     data = cur.fetchall()
     scans = []
     for i in data:
@@ -135,8 +216,10 @@ def listAllScans():
             'scan_id': i[0],
             'os_version': i[1],
             'app_version': i[2],
-            'threats': i[3],
-            'device_id': i[4]
+            'secure': i[3],
+            'threats': i[4],
+            'device_id': i[5],
+            'created_date': i[6]
         })
     if (data and len(data) > 0):
         response = jsonify({ # TODO: I wonder how to improve these to have an object definition interface
@@ -146,10 +229,10 @@ def listAllScans():
                     })
     else:
         response = jsonify({
-                        'status': 404,
                         'message': 'No scans found with provided query parameters.'
                     })
     return response
 
 if __name__ == "__main__":
     app.run(debug=True)
+    app.run(ssl_context='adhoc') # HTTPS locally

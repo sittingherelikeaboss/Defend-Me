@@ -40,7 +40,6 @@ def initialiseDatabase():
     for i in range(100):
         Faker.seed(i)
         fakeName = fake.name()
-        # TODO: Encrypt the password before storing in database
         cur.execute("INSERT INTO employee (name, email, password, deactivated) VALUES (?, ?, ?, ?)",
                     (fakeName, (fakeName.replace(" ", ".") + "@helloworld.io").lower(), generateEncryptedPassword(), False)
                     )
