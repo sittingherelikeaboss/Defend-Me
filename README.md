@@ -2,9 +2,12 @@
 
 ## Table of Contents
 
-- [Description](#description)
-- [Functionality](#functionality)
-
+1. [Description](#description)
+2. [Functionality](#functionality)
+    - [Login Screen](#login-screen)
+3. [Developer Instructions](#developer-instructions)
+    - [Local](#local)
+        - [Windows (Bash)](#windows-bash)
 
 ## Description
 
@@ -16,7 +19,13 @@ This application is written in Python for the backend and React for the frontend
 
 A smartphone application that scans a fictional company's employee devices for known and unknown malware.
 
-## Instructions
+### Login Screen
+
+The user is greeted with a login screen. This prevents anyone from accessing the Defend Me enterprise dashboard as it contains [PII](https://en.wikipedia.org/wiki/Personal_data) such as employee name, email and sensitive information.
+
+![login screen](./demo/screenshots/LoginScreen.PNG)
+
+## Developer Instructions
 
 ### Local
 
@@ -87,3 +96,6 @@ or
 python3 init_db.sql
 ```
 
+#### MacOS
+
+🚧 Work in progress 🚧
