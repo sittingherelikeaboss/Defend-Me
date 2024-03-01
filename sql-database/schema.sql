@@ -1,4 +1,6 @@
 DROP TABLE IF EXISTS employee;
+DROP TABLE IF EXISTS administrator;
+DROP TABLE IF EXISTS admin_access;
 DROP TABLE IF EXISTS device;
 DROP TABLE IF EXISTS scan;
 
@@ -6,10 +8,25 @@ CREATE TABLE employee (
   employee_id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
   email TEXT UNIQUE NOT NULL,
-  password TEXT NOT NULL,
   deactivated BOOLEAN NULL,
   created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_date TIMESTAMP NULL DEFAULT NULL
+);
+
+CREATE TABLE administrator (
+  administrator_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  email TEXT UNIQUE NOT NULL,
+  password TEXT NOT NULL,
+  created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_date TIMESTAMP NULL DEFAULT NULL
+);
+
+CREATE TABLE admin_access (
+  admin_access_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  admin_id INTEGER UNIQUE NOT NULL,
+  employee_id INTEGER UNIQUE NOT NULL,
+  FOREIGN KEY (employee_id) REFERENCES employee (employee_id)
+  FOREIGN KEY (admin_id) REFERENCES employee (admin_id)
 );
 
 CREATE TABLE device (

@@ -40,8 +40,24 @@ def initialiseDatabase():
     for i in range(100):
         Faker.seed(i)
         fakeName = fake.name()
-        cur.execute("INSERT INTO employee (name, email, password, deactivated) VALUES (?, ?, ?, ?)",
-                    (fakeName, (fakeName.replace(" ", ".") + "@helloworld.io").lower(), generateEncryptedPassword(), False)
+        cur.execute("INSERT INTO employee (name, email, deactivated) VALUES (?, ?, ?)",
+                    (fakeName, (fakeName.replace(" ", ".") + "@helloworld.io").lower(), False)
+                    )
+        
+    # Seed user admin roles -- NOT ALL EMPLOYEES!
+    # Make the first 5 employees as admin for simplicity... although not a thing in reality lol
+    for i in range(5):
+        Faker.seed(i)
+        fakeName = fake.name()
+        cur.execute("INSERT INTO administrator (email, password) VALUES (?, ?)",
+                    ((fakeName.replace(" ", ".") + "@helloworld.io").lower(), generateEncryptedPassword())
+                    )
+        
+    # Seed employee to admin relationship table
+    # We know from previous INSERT that first 5 employees are administrators
+    for i in range(1,6):
+        cur.execute("INSERT INTO admin_access (admin_id, employee_id) VALUES (?, ?)",
+                    (i, i)
                     )
 
     # Seed 1,000 devices
@@ -79,6 +95,16 @@ def initialiseDatabase():
     # Validate employees inserted into database
     print("\nSELECT COUNT(*) FROM employee")
     cur.execute("SELECT COUNT(*) FROM employee")
+    print(cur.fetchone()[0]) # We do this weird thing cause we get back a tuple
+    
+    # Validate administrator inserted into database
+    print("\nSELECT COUNT(*) FROM administrator")
+    cur.execute("SELECT COUNT(*) FROM administrator")
+    print(cur.fetchone()[0]) # We do this weird thing cause we get back a tuple
+    
+    # Validate admin_access inserted into database
+    print("\nSELECT COUNT(*) FROM admin_access")
+    cur.execute("SELECT COUNT(*) FROM admin_access")
     print(cur.fetchone()[0]) # We do this weird thing cause we get back a tuple
 
     # Validate device inserted into database

@@ -92,6 +92,33 @@ or
 python3 init_db.sql
 ```
 
+You should see the validation print to the console. Ensure it matches like in the sample below.
+
+```console
+Initialising database with schema from schema.sql!
+
+Starting table creation and insertion validation...
+
+SELECT COUNT(*) FROM employee
+100
+
+SELECT COUNT(*) FROM administrator
+5
+
+SELECT COUNT(*) FROM admin_access
+5
+
+SELECT COUNT(*) FROM device
+1000
+
+SELECT COUNT(*) FROM scan
+10000
+
+Finished table creation and insertion validation!
+
+Database initialised!
+```
+
 6. Run the commands below to start the backend server.
 
 ```
