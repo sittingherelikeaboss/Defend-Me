@@ -1,0 +1,10 @@
+Flask  
+datetime 
+uuid
+Flask-SQLAlchemy
+PyJWT
+sqlite
+Faker
+bcrypt
+request
+jsonify

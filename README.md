@@ -62,13 +62,21 @@ python3 --version
 
 If you do not have Python, go ahead and install it from [here](https://www.python.org/).
 
-3. Once you have Python installed, you will need these following Python packages. Run the following command to install them.
+3. Ensure you have `pip` installed.
 
 ```
-pip install sqlite Faker
+pip --version
 ```
 
-4. Run the commands below to initialise the database with seeded data.
+If you do not have `pip`, go ahead and refer to this [documentation](https://pypi.org/project/pip/).
+
+4. Once you have Python installed, you will need these following Python packages in `requirements.txt`. Run the following command to install them.
+
+```
+pip install -r requirements.txt
+```
+
+5. Run the commands below to initialise the database with seeded data.
 
 ```
 cd sql-database
@@ -84,7 +92,7 @@ or
 python3 init_db.sql
 ```
 
-5. Run the commands below to start the backend server.
+6. Run the commands below to start the backend server.
 
 ```
 cd flask-server/
@@ -94,7 +102,7 @@ cd flask-server/
 python3 server.py
 ```
 
-6. Run the commands below to install the dependencies for React and start the frontend in another bash terminal.
+7. Run the commands below to install the dependencies for React and start the frontend in another bash terminal.
 
 ```
 cd react-client/
@@ -116,3 +124,4 @@ npm start
 
 1. [Deep AI Image Generator](https://deepai.org/machine-learning-model/text2img) for the login screen background.
 2. [React Icons](https://react-icons.github.io/react-icons/) for icons used within the website.
+3. [Login Form](https://www.youtube.com/watch?v=kghwFYOJiNg) for the template.
