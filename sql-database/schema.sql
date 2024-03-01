@@ -1,7 +1,11 @@
 DROP TABLE IF EXISTS employee;
+
 DROP TABLE IF EXISTS administrator;
+
 DROP TABLE IF EXISTS admin_access;
+
 DROP TABLE IF EXISTS device;
+
 DROP TABLE IF EXISTS scan;
 
 CREATE TABLE employee (
@@ -25,7 +29,7 @@ CREATE TABLE admin_access (
   admin_access_id INTEGER PRIMARY KEY AUTOINCREMENT,
   admin_id INTEGER UNIQUE NOT NULL,
   employee_id INTEGER UNIQUE NOT NULL,
-  FOREIGN KEY (employee_id) REFERENCES employee (employee_id)
+  FOREIGN KEY (employee_id) REFERENCES employee (employee_id),
   FOREIGN KEY (admin_id) REFERENCES employee (admin_id)
 );
 
@@ -49,4 +53,13 @@ CREATE TABLE scan (
   created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_date TIMESTAMP NULL DEFAULT NULL,
   FOREIGN KEY (device_id) REFERENCES device (device_id)
+);
+
+CREATE TABLE api_key (
+  api_key_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  key_value VARCHAR(255) UNIQUE,
+  description TEXT,
+  deactivated BOOLEAN NULL,
+  created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_date TIMESTAMP NULL DEFAULT NULL
 );
