@@ -143,6 +143,9 @@ npm install
 npm start
 ```
 
+8. You will need to create an SSL certificate in your local machine if you have not already with [mkcert using Chocolatey](https://github.com/FiloSottile/mkcert?tab=readme-ov-file#windows).
+- Install using Powershell using command [here](https://chocolatey.org/install).
+
 #### MacOS
 
 🚧 Work in progress 🚧
