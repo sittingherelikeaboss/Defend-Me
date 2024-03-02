@@ -1,2 +1,3 @@
 flask-server/venv/
 sql-database/database.db
+react-client/.cert
