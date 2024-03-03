@@ -91,6 +91,9 @@ pip --version
     - Run `mod_wsgi-express module-config`. 
     - Copy and paste the output of the terminal and add it to `C:\Apache24\conf\httpd.conf` file. 
     - You will need to restart the Apache server after updating the config `./httpd.exe -k restart`.
+    - Start the Apache server `mod_wsgi-express start-server`.
+    - On your browser go to [http://localhost:8000/](http://localhost:8000/).
+
 
 6. You will need to create an SSL certificate in your local machine if you have not already with [mkcert using Chocolatey](https://github.com/FiloSottile/mkcert?tab=readme-ov-file#windows). If you **do not** have Chocolatey, install using Powershell using command [here](https://chocolatey.org/install).
 
