@@ -1,4 +1,5 @@
-Flask  
+Flask 
+mod_wsgi
 datetime 
 uuid
 Flask-SQLAlchemy
@@ -6,3 +7,4 @@ PyJWT
 Faker
 bcrypt
 jsonify
+flask-login

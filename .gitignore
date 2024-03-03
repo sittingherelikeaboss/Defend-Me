@@ -1,3 +1,4 @@
-flask-server/venv/
-sql-database/database.db
-react-client/.cert
+**/venv/
+**/database.db
+**/.cert
+**/__pycache__

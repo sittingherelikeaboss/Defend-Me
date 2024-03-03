@@ -22,7 +22,9 @@ A smartphone application that scans a fictional company's employee devices for k
 
 ### Security Considerations
 
-1. 
+1. Hashed email and password in the frontend.
+2. Hashed passwords in the database in case a database is stolen, the passwords are hashed and salted.
+3. React website is HTTPS and so is the backend.
 
 ### 🔑 Login Screen
 
@@ -38,7 +40,7 @@ The user is greeted with a login screen. This prevents anyone from accessing the
 
 ### Local
 
-#### 🖥️ Windows (Bash)
+#### 🖥️ Windows
 
 1. Ensure you have Node.js and npm installed in your machine. Check by running the following commands.
 
@@ -50,7 +52,8 @@ npm -v
 node -v
 ```
 
-If you do not have Node.js, install from [here](https://nodejs.org/en/download).
+> [!NOTE]
+> If you do not have Node.js, install from [here](https://nodejs.org/en/download).
 
 2. Ensure you have Python installed.
 
@@ -64,7 +67,8 @@ or
 python3 --version
 ```
 
-If you do not have Python, go ahead and install it from [here](https://www.python.org/).
+> [!NOTE]
+> If you do not have Python, go ahead and install it from [here](https://www.python.org/).
 
 3. Ensure you have `pip` installed.
 
@@ -72,15 +76,32 @@ If you do not have Python, go ahead and install it from [here](https://www.pytho
 pip --version
 ```
 
-If you do not have `pip`, go ahead and refer to this [documentation](https://pypi.org/project/pip/).
+> [!NOTE]
+> If you do not have `pip`, go ahead and refer to this [documentation](https://pypi.org/project/pip/).
 
-4. Once you have Python installed, you will need these following Python packages in `requirements.txt`. Run the following command to install them.
+4. You will need to install Apache 24 into your local machine. Follow instructions [here](https://httpd.apache.org/docs/current/platform/windows.html#down). **Troubleshooting:** If you get this error `AH00558: httpd.exe: Could not reliably determine the server's fully qualified domain name, using ::1. Set the 'ServerName' directive globally to suppress this message`, try these commands:
+    - `sql-database/schema.sql`
+    - Update in the `httpd.conf` file to `ServerName localhost`. It will be commented so you have to uncomment it.
+    - Once the config is updated, you will need to restart the Apache24 server.
+    - `cd C:\Apache24\bin`
+    - `./httpd.exe -k install`
+    - `./httpd.exe -k restart`
+
+5. Follow steps below to modify Apache configurations. 
+    - Run `mod_wsgi-express module-config`. 
+    - Copy and paste the output of the terminal and add it to `C:\Apache24\conf\httpd.conf` file. 
+    - You will need to restart the Apache server after updating the config `./httpd.exe -k restart`.
+
+6. You will need to create an SSL certificate in your local machine if you have not already with [mkcert using Chocolatey](https://github.com/FiloSottile/mkcert?tab=readme-ov-file#windows). If you **do not** have Chocolatey, install using Powershell using command [here](https://chocolatey.org/install).
+
+
+7. Once you have Python installed, you will need these following Python packages in `requirements.txt`. Run the following command to install them.
 
 ```
 pip install -r requirements.txt
 ```
 
-5. Run the commands below to initialise the database with seeded data.
+8. Run the commands below to initialise the database with seeded data.
 
 ```
 cd sql-database
@@ -123,11 +144,7 @@ Finished table creation and insertion validation!
 Database initialised!
 ```
 
-6. You will need to create an SSL certificate in your local machine if you have not already with [mkcert using Chocolatey](https://github.com/FiloSottile/mkcert?tab=readme-ov-file#windows). If you **do not** have Chocolatey, install using Powershell using command [here](https://chocolatey.org/install).
-
-7. You will need to install Apache 24 into your local machine. Follow instructions [here](https://httpd.apache.org/docs/current/platform/windows.html#down).
-
-8. Run the commands below to start the backend server.
+9. Run the commands below to start the backend server.
 
 ```
 cd flask-server/
@@ -137,7 +154,7 @@ cd flask-server/
 python3 server.py
 ```
 
-9. Run the commands below to install the dependencies for React and start the frontend in another bash terminal.
+10. Run the commands below to install the dependencies for React and start the frontend in another bash terminal.
 
 ```
 cd react-client/
@@ -150,10 +167,6 @@ npm install
 ```
 npm start
 ```
-
-#### MacOS
-
-🚧 Work in progress 🚧
 
 ## Credits
 
