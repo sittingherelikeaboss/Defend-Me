@@ -14,11 +14,15 @@
 
 This is a take-home project for a technical interview for a company.
 
-This application is written in Python for the backend and React for the frontend.
+This application is written in Python for the Flask backend and React.js for the frontend.
 
 ## Functionality
 
 A smartphone application that scans a fictional company's employee devices for known and unknown malware.
+
+### Security Considerations
+
+1. 
 
 ### 🔑 Login Screen
 
@@ -119,7 +123,12 @@ Finished table creation and insertion validation!
 Database initialised!
 ```
 
-6. Run the commands below to start the backend server.
+6. You will need to create an SSL certificate in your local machine if you have not already with [mkcert using Chocolatey](https://github.com/FiloSottile/mkcert?tab=readme-ov-file#windows).
+- Install using Powershell using command [here](https://chocolatey.org/install).
+
+7. You will need to install Apache 24 into your local machine. Follow instructions [here](https://httpd.apache.org/docs/current/platform/windows.html#down).
+
+8. Run the commands below to start the backend server.
 
 ```
 cd flask-server/
@@ -129,7 +138,7 @@ cd flask-server/
 python3 server.py
 ```
 
-7. Run the commands below to install the dependencies for React and start the frontend in another bash terminal.
+9. Run the commands below to install the dependencies for React and start the frontend in another bash terminal.
 
 ```
 cd react-client/
@@ -142,9 +151,6 @@ npm install
 ```
 npm start
 ```
-
-8. You will need to create an SSL certificate in your local machine if you have not already with [mkcert using Chocolatey](https://github.com/FiloSottile/mkcert?tab=readme-ov-file#windows).
-- Install using Powershell using command [here](https://chocolatey.org/install).
 
 #### MacOS
 
