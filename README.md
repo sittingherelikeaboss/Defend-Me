@@ -42,6 +42,9 @@ The user is greeted with a login screen. This prevents anyone from accessing the
 
 #### 🖥️ Windows
 
+> [!IMPORTANT]
+> Most of the commands below are ran using Git Bash so please install it from [here](https://git-scm.com/download/win) if you do not have it yet.
+
 1. Ensure you have Node.js and npm installed in your machine. Check by running the following commands.
 
 ```
@@ -52,8 +55,7 @@ npm -v
 node -v
 ```
 
-> [!NOTE]
-> If you do not have Node.js, install from [here](https://nodejs.org/en/download).
+If you do not have Node.js, install from [here](https://nodejs.org/en/download).
 
 2. Ensure you have Python installed.
 
@@ -67,8 +69,7 @@ or
 python3 --version
 ```
 
-> [!NOTE]
-> If you do not have Python, go ahead and install it from [here](https://www.python.org/).
+If you do not have Python, go ahead and install it from [here](https://www.python.org/).
 
 3. Ensure you have `pip` installed.
 
@@ -76,8 +77,7 @@ python3 --version
 pip --version
 ```
 
-> [!NOTE]
-> If you do not have `pip`, go ahead and refer to this [documentation](https://pypi.org/project/pip/).
+If you do not have `pip`, go ahead and refer to this [documentation](https://pypi.org/project/pip/).
 
 4. You will need to install Apache 24 into your local machine. Follow instructions [here](https://httpd.apache.org/docs/current/platform/windows.html#down). **Troubleshooting:** If you get this error `AH00558: httpd.exe: Could not reliably determine the server's fully qualified domain name, using ::1. Set the 'ServerName' directive globally to suppress this message`, try these commands:
     - `sql-database/schema.sql`
@@ -152,7 +152,7 @@ cd flask-server/
 ```
 
 ```
-python3 server.py
+python server.py
 ```
 
 10. Run the commands below to install the dependencies for React and start the frontend in another bash terminal.
