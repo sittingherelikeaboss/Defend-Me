@@ -95,7 +95,7 @@ pip --version
     - On your browser go to [http://localhost:8000/](http://localhost:8000/).
 
 
-6. You will need to create an SSL certificate in your local machine if you have not already with [mkcert using Chocolatey](https://github.com/FiloSottile/mkcert?tab=readme-ov-file#windows). If you **do not** have Chocolatey, install using Powershell using command [here](https://chocolatey.org/install).
+6. You will need to create an SSL certificate in your local machine if you have not already with [mkcert using Chocolatey](https://github.com/FiloSottile/mkcert?tab=readme-ov-file#windows). If you **do not** have Chocolatey, install using Powershell using command [here](https://chocolatey.org/install). Ensure the `cert.pem` and `key.pem` files are created at the top level directory of `\defend-me\react-client`.
 
 
 7. Once you have Python installed, you will need these following Python packages in `requirements.txt`. Run the following command to install them.
@@ -114,15 +114,11 @@ cd sql-database
 python init_db.sql
 ```
 
-or
+<details>
+
+<summary>You should see the validation print to the console. Ensure it matches like in the sample here.</summary>
 
 ```
-python3 init_db.sql
-```
-
-You should see the validation print to the console. Ensure it matches like in the sample below.
-
-```console
 Initialising database with schema from schema.sql!
 
 Starting table creation and insertion validation...
@@ -146,6 +142,8 @@ Finished table creation and insertion validation!
 
 Database initialised!
 ```
+
+</details>
 
 9. Run the commands below to start the backend server.
 
