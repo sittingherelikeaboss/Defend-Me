@@ -4,10 +4,14 @@
 
 1. [Description](#description)
 2. [Functionality](#functionality)
+    - [Security Considerations](#security-considerations)
     - [Login Screen](#login-screen)
+    - [Enterprise Dashboard](#enterprise-dashboard)
 3. [Developer Instructions](#developer-instructions)
     - [Local](#local)
-        - [Windows (Bash)](#windows-bash)
+        - [Windows](#windows-bash)
+        - [Troubleshooting](#troubleshooting)
+            - [Cross-Origin Request Blocked and CORS issues](#cross-origin-request-blocked-and-cors-issues)
 4. [Credits](#credits)
 
 ## 📖 Description
@@ -168,6 +172,11 @@ npm install
 ```
 npm start
 ```
+
+#### Troubleshooting
+
+##### Cross-Origin Request Blocked and CORS issues
+    - On Google Chrome enter `chrome://flags/#allow-insecure-localhost` and allow invalid certificates on localhost. This should be okay since it's just in our local dev environment with a self-signed SSL certificate.
 
 ## Credits
 
