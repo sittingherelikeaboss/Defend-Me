@@ -57,8 +57,8 @@
 }
 
 .compromised-devices-table {
-  overflow-y: scroll;
-  height: 300px;
+  overflow-y: hidden;
+  height: 460px;
   display: block;
   padding: 15px 10px;
   color: white;
@@ -66,9 +66,11 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border: 2px solid rgba(255, 255, 255, 0.2);
   background: transparent;
+  overflow-y: scroll;
 }
 
 .compromised-devices-table table td {
   padding: 5px;
   border: 1px solid white;
 }
+
