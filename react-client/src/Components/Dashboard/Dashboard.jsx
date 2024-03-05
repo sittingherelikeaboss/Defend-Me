@@ -130,7 +130,7 @@ export const Dashboard = () => {
           <tr>
             <td>{employeeData.length}</td>
             <td>10000</td>
-            <td>{scannedData.length ?? 0}</td>
+            <td>{scannedData.filter((data) => data.secure == 0).length ?? 0}</td>
           </tr>
         </table>
       </div>

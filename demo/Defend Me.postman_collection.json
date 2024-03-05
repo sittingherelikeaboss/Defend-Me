@@ -36,7 +36,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://127.0.0.1:5000/scan?secure=false&device_id=88",
+					"raw": "https://127.0.0.1:5000/scan?secure=false&app_version=1.0.0&device_id=115",
 					"protocol": "https",
 					"host": [
 						"127",
@@ -54,13 +54,12 @@
 							"value": "false"
 						},
 						{
-							"key": "device_id",
-							"value": "88"
+							"key": "app_version",
+							"value": "1.0.0"
 						},
 						{
-							"key": "app_version",
-							"value": "1.0.0",
-							"disabled": true
+							"key": "device_id",
+							"value": "115"
 						}
 					]
 				}
@@ -73,8 +72,8 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:5000/device",
-					"protocol": "http",
+					"raw": "https://127.0.0.1:5000/device",
+					"protocol": "https",
 					"host": [
 						"127",
 						"0",
@@ -171,7 +170,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Oolong Teaman\",\r\n    \"email\": \"oolong.teaman@test.com\",\r\n    \"password\": \"lmao!\"\r\n}",
+					"raw": "{\r\n    \"name\": \"Oolong Teaman\",\r\n    \"email\": \"oolong.teaman@test.com\",\r\n    \"password\": \"FakePassword\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -202,7 +201,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"michael.reid@helloworld.io\",\r\n    \"password\": \"lmao!\"\r\n}",
+					"raw": "{\r\n    \"email\": \"michael.reid@helloworld.io\",\r\n    \"password\": \"FakePassword\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -294,7 +293,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"michael.reid@helloworld.io\",\r\n    \"password\": \"lmao!\"\r\n}",
+					"raw": "{\r\n    \"email\": \"michael.reid@helloworld.io\",\r\n    \"password\": \"FakePassword\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
