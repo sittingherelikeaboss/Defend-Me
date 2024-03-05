@@ -355,7 +355,7 @@ python3 --version
 
 If you do not have Python, go ahead and install it from [here](https://www.python.org/).
 
-3. Ensure you have `pip` installed.
+3. Ensure you have `pip` installed and [virtual environment](https://docs.python.org/3/library/venv.html) in `flask-server` folder.
 
 ```
 pip --version
