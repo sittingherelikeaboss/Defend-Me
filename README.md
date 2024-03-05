@@ -376,7 +376,7 @@ npm start
 
 If using Google Chrome enter `chrome://flags/#allow-insecure-localhost` and allow invalid certificates on localhost. This should be okay since it's just in our local dev environment with a self-signed SSL certificate.
 
-## Nice to haves / Bugs
+## Nice to haves
 
 Due to time constraints of this project, there are some nice to haves and things that could be implemented such as:
 
@@ -387,6 +387,12 @@ Due to time constraints of this project, there are some nice to haves and things
 5. Host it.
 5. Hashed email and password in the frontend.
 
+## Bugs
+
+Order goes from top priority to lowest. Lowest is usually look-and-feel. Top priority affects functionality.
+
+1. Drop-down options for scanned devices doesn't work properly when switching to Email or App Version. 
+2. When invalid login, the wrapper box becomes wider.
 
 ## Credits
 
