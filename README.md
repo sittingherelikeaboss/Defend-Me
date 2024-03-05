@@ -31,10 +31,9 @@ A smartphone application that scans a fictional company's employee devices for k
 
 ### Security Considerations
 
-1. Hashed email and password in the frontend.
-2. Hashed passwords in the database in case a database is stolen, the passwords are hashed and salted.
-3. React website is HTTPS and so is the Flask backend.
-4. When a user logs in, a session ID is generated that is valid for a certain time (e.g. 1 hour) to access the private dashboard page.
+1. Hashed passwords in the database in case a database is stolen, the passwords are hashed and salted.
+2. React website is HTTPS and so is the Flask backend.
+3. When a user logs in, a session ID is generated that is valid for a certain time (e.g. 1 hour) to access the private dashboard page.
 
 
 ### 🔑 Login Screen
@@ -380,6 +379,7 @@ Due to time constraints of this project, there are some nice to haves and things
 3. Adding pagination to the front-end. Although I have code in the backend to do pagination for scans, I need more time to research how to do it on React.
 4. Logout button.
 5. Host it.
+5. Hashed email and password in the frontend.
 
 
 ## Credits
