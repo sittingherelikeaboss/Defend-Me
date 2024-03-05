@@ -176,7 +176,7 @@ npm start
 #### Troubleshooting
 
 ##### Cross-Origin Request Blocked and CORS issues
-    - On Google Chrome enter `chrome://flags/#allow-insecure-localhost` and allow invalid certificates on localhost. This should be okay since it's just in our local dev environment with a self-signed SSL certificate.
+    - If using Google Chrome enter `chrome://flags/#allow-insecure-localhost` and allow invalid certificates on localhost. This should be okay since it's just in our local dev environment with a self-signed SSL certificate.
 
 ## Credits
 
