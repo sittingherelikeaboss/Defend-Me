@@ -1,5 +1,3 @@
-import string
-import random
 import bcrypt
 
 def encrpytPassword(password):

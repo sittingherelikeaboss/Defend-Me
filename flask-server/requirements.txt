@@ -9,3 +9,6 @@ bcrypt
 jsonify
 flask-login
 cryptography
+flask-cors
+pyopenssl
+flask-jwt-extended
