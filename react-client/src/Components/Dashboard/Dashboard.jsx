@@ -216,7 +216,7 @@ export const Dashboard = () => {
               <th>App Version</th>
               <th>OS Version</th>
               <th>Threats</th>
-              <th>Threat Detected</th>
+              <th>Scanned Date</th>
             </tr>
             {scannedData.map((item, index) => (
               <tr key={index}>
