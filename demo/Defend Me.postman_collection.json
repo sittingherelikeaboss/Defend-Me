@@ -1,0 +1,494 @@
+{
+	"info": {
+		"_postman_id": "195b83f0-ca74-4a06-a152-d69bff372290",
+		"name": "Defend Me",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7180020"
+	},
+	"item": [
+		{
+			"name": "Retrive Employee by Email Address",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://127.0.0.1:5000/employee/email/dwayne.kirk@helloworld.io",
+					"protocol": "https",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"employee",
+						"email",
+						"dwayne.kirk@helloworld.io"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List all Scans",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://127.0.0.1:5000/scan?secure=false&device_id=88",
+					"protocol": "https",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"scan"
+					],
+					"query": [
+						{
+							"key": "secure",
+							"value": "false"
+						},
+						{
+							"key": "device_id",
+							"value": "88"
+						},
+						{
+							"key": "app_version",
+							"value": "1.0.0",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List all Devices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/device",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"device"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List all employees",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://127.0.0.1:5000/employee",
+					"protocol": "https",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"employee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List all employees by name keyword",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://127.0.0.1:5000/employee/name/norma",
+					"protocol": "https",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"employee",
+						"name",
+						"norma"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Protected Page (for testing)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6dHJ1ZSwiaWF0IjoxNzA5NTk5OTcxLCJqdGkiOiJiMDRjNjhmMS05MGUwLTQ2ZjctYWQ2Ny0yMjNhYzc4MDJlNmIiLCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoibWljaGFlbC5yZWlkQGhlbGxvd29ybGQuaW8iLCJuYmYiOjE3MDk1OTk5NzEsImNzcmYiOiIzY2U5YWM3Yi05NDJiLTRlM2UtOTQ0MC1hYTRhN2YyNjdhN2MiLCJleHAiOjE3MDk2MDM1NzF9.y-cI6mGlPBZyMbP9O0BG-Ivivrv01pD8wPXkmrUUKkM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5000/protected",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"protected"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Employee",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Oolong Teaman\",\r\n    \"email\": \"oolong.teaman@test.com\",\r\n    \"password\": \"lmao!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://127.0.0.1:5000/employee",
+					"protocol": "https",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"employee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Employee Administrator",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"michael.reid@helloworld.io\",\r\n    \"password\": \"lmao!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://127.0.0.1:5000/administrator",
+					"protocol": "https",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"administrator"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create Employee Administrator",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"michael.reid@helloworld.io\",\r\n    \"password\": \"lmao!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://127.0.0.1:5000/administrator",
+							"protocol": "https",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"administrator"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/3.0.1 Python/3.8.2"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 03 Mar 2024 05:16:55 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "110"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"administrator_id\": 6,\n    \"created_date\": \"2024-03-03 05:16:55\",\n    \"email\": \"michael.reid@helloworld.io\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"michael.reid@helloworld.io\",\r\n    \"password\": \"lmao!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5000/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"michael.reid@helloworld.io\",\r\n    \"password\": \"lmao!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5000/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/3.0.1 Python/3.8.2"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 04 Mar 2024 15:59:18 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "30"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"passwordMatches\": true\n}"
+				}
+			]
+		},
+		{
+			"name": "Create Token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"test\",\r\n    \"password\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5000/token",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"token"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test\",\r\n    \"password\": \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5000/token",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"token"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/3.0.1 Python/3.8.2"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 04 Mar 2024 16:00:17 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "354"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwOTU2ODAxNywianRpIjoiMzRjMDlhZTctNzZlMC00NjZkLWE2NDUtN2RmOWI0Yzk4ZWU2IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3QiLCJuYmYiOjE3MDk1NjgwMTcsImNzcmYiOiJlNTMzNzJmMi00NGRlLTRjYjUtODY1Yy03ZTUwODFhNGE3MmMiLCJleHAiOjE3MDk1Njg5MTd9._RK3gxpJ9peYFoAlsgdDTujvnZwPpF0mJedNvenMZFU\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6dHJ1ZSwiaWF0IjoxNzA5NTk5OTcxLCJqdGkiOiJiMDRjNjhmMS05MGUwLTQ2ZjctYWQ2Ny0yMjNhYzc4MDJlNmIiLCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoibWljaGFlbC5yZWlkQGhlbGxvd29ybGQuaW8iLCJuYmYiOjE3MDk1OTk5NzEsImNzcmYiOiIzY2U5YWM3Yi05NDJiLTRlM2UtOTQ0MC1hYTRhN2YyNjdhN2MiLCJleHAiOjE3MDk2MDM1NzF9.y-cI6mGlPBZyMbP9O0BG-Ivivrv01pD8wPXkmrUUKkM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5000/logout",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

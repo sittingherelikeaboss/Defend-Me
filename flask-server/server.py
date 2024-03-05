@@ -138,13 +138,13 @@ def getEmployeeByEmail(email):
         data = cur.fetchone()
         if (data and len(data) > 0):
             response = jsonify({ # TODO: I wonder how to improve these to have an object definition interface
-                            'data': {
+                            'data': [{
                                 'employee_id': data[0],
                                 'name': data[1],
                                 'email': data[2],
                                 'created_date': data[3],
                                 'updated_date': data[4]
-                            }
+                            }]
                         })
             return _corsify_actual_response(response), 200
         else:
@@ -392,7 +392,7 @@ def listAllScans():
                 
         print(sql)
             
-        # Calculate offset
+        # Calculate offset # TODO: Uncomment this for pagination
         # page = int(request.args.get("page"))
         # page_size = int(request.args.get("page_size"))
         # if (page and page >= 0 and page_size and page_size >= 0):
