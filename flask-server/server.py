@@ -121,7 +121,7 @@ def testProtected():
 
 
 
-@app.route("/employee/<email>", methods=['GET'])
+@app.route("/employee/email/<email>", methods=['GET'])
 def getEmployeeByEmail(email):
     if request.method == "OPTIONS": # CORS preflight
         return _build_cors_preflight_response()
@@ -152,7 +152,51 @@ def getEmployeeByEmail(email):
                             'message': 'No employee found with provided email address.'
                         })
             return _corsify_actual_response(response), 404
+        
+'''
+Returns a list of employees with a keyword in their name (e.g. "norma" for Norma Fischer).
+'''
+@app.route("/employee/name/<keyword>", methods=["GET", "OPTIONS"])
+def listEmployeesByKeyword(keyword):
+    if request.method == "OPTIONS": # CORS preflight
+        return _build_cors_preflight_response()
+    elif request.method == "GET": # The actual request following the preflight
+        db_file = 'database.db'
+        oldpwd = os.getcwd()
+        os.chdir("..")
+        os.chdir(os.path.join(os.path.abspath(os.curdir), 'sql-database'))
+        print("Current directory now:" , os.getcwd()) 
+        db_connection = sqlite3.connect(os.path.join(os.path.abspath(os.curdir), db_file))
+        os.chdir(oldpwd)
 
+        cur = db_connection.cursor()
+        cur.execute('SELECT employee_id, name, email, created_date, updated_date FROM employee where name like "%%%s%%"' % keyword)
+        data = cur.fetchall()
+        employees = []
+        for i in data:
+            employees.append({
+                'employee_id': i[0],
+                'name': i[1],
+                'email': i[2],
+                'created_date': i[3],
+                'updated_date': i[4]
+            })
+        
+        db_connection.close()
+
+        if (data and len(data) > 0):
+            response = jsonify({ # TODO: I wonder how to improve these to have an object definition interface
+                            'object': 'list',
+                            'url': '/employee',
+                            'data': employees,
+                            'count': len(data)
+                        })
+            return _corsify_actual_response(response), 200
+        else:
+            response = jsonify({
+                            'message': 'No employee found with provided email address.'
+                        })
+            return _corsify_actual_response(response), 404
 '''
 Returns a list of employees as an array of objects from SQLite
 '''
@@ -325,9 +369,35 @@ def listAllScans():
         os.chdir(oldpwd)
 
         sql = "SELECT scan_id, os_version, app_version, secure, threats, device_id, created_date FROM scan"
-        secure = request.args.get('secure')
-        if (len(secure) > 0):
-            sql = sql + " WHERE secure = %s" % secure
+
+        filterValues = [{'key':'secure', 'type': bool}, {'key':'device_id','type': int}, \
+            {'key':'app_version', 'type': str}]
+        newSqls = []
+        for filterValue in filterValues:
+            value = request.args.get(filterValue["key"])
+            if (value and (filterValue['type'] == bool or filterValue['type'] == int)):
+                newSqls.append(" %s = %s " % (filterValue["key"], value))
+            elif (value and filterValue['type'] == str):
+                newSqls.append(" %s = \"%s\" " % (filterValue["key"], value))
+                            
+        if (len(newSqls) > 0):
+            sql = sql + " WHERE "
+            counter = 0
+            for newSql in newSqls:
+                if (counter == 0):
+                    sql = sql + newSql
+                else:
+                    sql = sql + ' AND ' +  newSql
+                counter = counter + 1
+                
+        print(sql)
+            
+        # Calculate offset
+        # page = int(request.args.get("page"))
+        # page_size = int(request.args.get("page_size"))
+        # if (page and page >= 0 and page_size and page_size >= 0):
+        #     offset = (page - 1) * page_size
+        #     sql = sql + (" LIMIT %i OFFSET %i" % (page_size, offset))
 
         cur = db_connection.cursor()
         cur.execute(sql)
