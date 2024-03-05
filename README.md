@@ -7,12 +7,17 @@
     - [Security Considerations](#security-considerations)
     - [Login Screen](#login-screen)
     - [Enterprise Dashboard](#enterprise-dashboard)
-3. [Developer Instructions](#developer-instructions)
+3. [Backend APIs](#backend-apis)
+    - [Postman Collection](#postman-collection)
+    - [Authentication](#authentication)
+    - [Core Resources](#core-resources)
+4. [Developer Instructions](#developer-instructions)
     - [Local](#local)
         - [Windows](#windows-bash)
         - [Troubleshooting](#troubleshooting)
             - [Cross-Origin Request Blocked and CORS issues](#cross-origin-request-blocked-and-cors-issues)
-4. [Credits](#credits)
+5. [Nice to Haves / Bugs](#nice-to-haves--bugs)
+6. [Credits](#credits)
 
 ## 📖 Description
 
@@ -28,7 +33,9 @@ A smartphone application that scans a fictional company's employee devices for k
 
 1. Hashed email and password in the frontend.
 2. Hashed passwords in the database in case a database is stolen, the passwords are hashed and salted.
-3. React website is HTTPS and so is the backend.
+3. React website is HTTPS and so is the Flask backend.
+4. When a user logs in, a session ID is generated that is valid for a certain time (e.g. 1 hour) to access the private dashboard page.
+
 
 ### 🔑 Login Screen
 
@@ -43,6 +50,187 @@ The user is greeted with a login screen. This prevents anyone from accessing the
 We can filter the scans based on Email Address of the device employee owner, Device ID and App Version.
 
 ![dashboard filter](./demo/screenshots/DashboardScreen_Filter.PNG)
+
+## Backend APIs
+
+> [!NOTE]
+> All API requests must be made over HTTPS. Calls made over HTTP will fail.
+
+Ideally the API docs should come in an OpenAPI spec so it is standardised and can be used by potential devs that want to integrate with the system. It also makes a great doc!
+
+### Postman Collection
+
+See Postman collection [here](./demo/Defend%20Me.postman_collection.json).
+
+### Authentication
+
+#### Login
+
+Authenticate user email and password.
+
+Endpoint: POST `/login`
+
+Request Body: 
+
+```json
+{
+    "email": "firstname.lastname@helloworld.io",
+    "password": "SomePasswordHere"
+}
+```
+
+HTTP Status Code Summary
+
+HTTS Status | Code Summary | Details
+--- | --- | ---
+200 | OK | Everything worked as expected.
+400 | Bad Request | Invalid password or no password found with provided email address.
+500 | Server Error | Something went wrong on Defend Me's end.
+
+#### Logout
+
+Log out of Defend Me.
+
+Endpoint: POST `/logout`
+
+Request Body: 
+
+```json
+{
+    "message": "logout successful"
+}
+```
+
+HTTP Status Code Summary
+
+HTTS Status | Code Summary | Details
+--- | --- | ---
+200 | OK | Everything worked as expected.
+400 | Bad Request | Invalid password or no password found with provided email address.
+500 | Server Error | Something went wrong on Defend Me's end.
+
+### Core Resources
+
+#### List All Employees
+
+Returns a list of employees.
+
+Endpoint: GET `/employee`
+
+Response Body: 
+
+```json
+{
+    "count": 100,
+    "data": [
+        {
+            "created_date": "2024-03-03 04:43:04",
+            "email": "norma.fisher@helloworld.io",
+            "employee_id": 1,
+            "name": "Norma Fisher",
+            "updated_date": null
+        },
+            ],
+    "object": "list",
+    "url": "/employee"
+}
+```
+
+HTTP Status Code Summary
+
+HTTS Status | Code Summary | Details
+--- | --- | ---
+200 | OK | Everything worked as expected.
+500 | Server Error | Something went wrong on Defend Me's end.
+
+#### Retrieve employee by email
+
+Returns an employee by email address
+
+Endpoint: GET `/employee`
+
+Response Body: 
+
+```json
+{
+    "data": {
+        "created_date": "2024-03-03 04:43:04",
+        "email": "dwayne.kirk@helloworld.io",
+        "employee_id": 66,
+        "name": "Dwayne Kirk",
+        "updated_date": null
+    }
+}
+```
+
+#### List All Devices
+
+Returns a list of devices.
+
+Endpoint: GET `/device`
+
+Response Body: 
+
+```json
+{
+    "data": [
+        {
+            "device_id": 1,
+            "employee_id": 97,
+            "model": "Apple iPad Mini",
+            "unique_device_identifier": "7d69e94b-3903-48ac-8633-806c8ebae17b"
+        },
+    ],
+    "object": "list",
+    "url": "/device"
+}
+```
+
+HTTP Status Code Summary
+
+HTTS Status | Code Summary | Details
+--- | --- | ---
+200 | OK | Everything worked as expected.
+500 | Server Error | Something went wrong on Defend Me's end.
+
+#### List All Scans
+
+Returns a list of scanned devices.
+
+Endpoint: GET `/scan`
+
+Query Parameters:
+
+- secure (boolean) - true or false
+- app_version (string) - 1.0.0, 1.1.0, or 1.1.1 are sample data
+- device_id (integer) - 1 to 1000 are sample data
+
+Response Body: 
+
+```json
+{
+    "data": [
+        {
+            "app_version": "1.0.0",
+            "created_date": "2024-03-03 04:43:06",
+            "device_id": 115,
+            "os_version": "iOS 16",
+            "scan_id": 6699,
+            "secure": 0,
+            "threats": "Cryptomining malware"
+        }
+    ],
+    "object": "list",
+    "url": "/scans"
+}
+```
+
+HTTP Status Code Summary
+
+HTTS Status | Code Summary | Details
+--- | --- | ---
+200 | OK | Everything worked as expected.
+500 | Server Error | Something went wrong on Defend Me's end.
 
 ## 👩‍💻 Developer Instructions
 
@@ -182,6 +370,17 @@ npm start
 ##### Cross-Origin Request Blocked and CORS issues
 
 If using Google Chrome enter `chrome://flags/#allow-insecure-localhost` and allow invalid certificates on localhost. This should be okay since it's just in our local dev environment with a self-signed SSL certificate.
+
+## Nice to haves / Bugs
+
+Due to time constraints of this project, there are some nice to haves and things that could be implemented such as:
+
+1. Randomly generated timestamp for when the scan was detected. So we can show a time graph of when things were detected in the dashboard.
+2. JWT token upon authentication so users can go in private pages even after they refresh the page.
+3. Adding pagination to the front-end. Although I have code in the backend to do pagination for scans, I need more time to research how to do it on React.
+4. Logout button.
+5. Host it.
+
 
 ## Credits
 
