@@ -42,6 +42,10 @@ The user is greeted with a login screen. This prevents anyone from accessing the
 
 ![login screen](./demo/screenshots/LoginScreen.PNG)
 
+When you login with invalid credentials.
+
+![login error](./demo//screenshots/LoginError.PNG)
+
 ### Enterprise Dashboard
 
 ![dashboard screen](./demo/screenshots/DashboardScreen.PNG)
