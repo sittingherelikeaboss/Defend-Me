@@ -1,33 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useContext, createContext } from "react";
 import "./LoginForm.css";
 import { FaUser, FaLock } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { API_URL } from "../Assets/Constants";
+
+const AuthContext = createContext();
+export const AuthData = () => useContext(AuthContext);
 
 export const LoginForm = () => {
   const navigate = useNavigate();
-
   const { register, handleSubmit } = useForm();
+  const [showError, setShowError] = useState(false);
+
   const onSubmit = async (formData) => {
-    console.log(formData);
     const email = formData["email"];
     const password = formData["password"];
-    // const rememberMe = data["rememberMe"]; // TODO: Use this to remember email/password
+
     axios
-      .get("/employee/validate/" + email.toLowerCase(), {
-        params: {
-          password: password,
+      .post(`${API_URL}/login`, {
+        email: email,
+        password: password,
+      }, {
+        headers: {
+          "Access-Control-Allow-Origins": "*", // Adds CORS header to the request?
+          "Content-Type": "application/json",
         },
       })
       .then((response) => {
-        // setData(response.data);
-        const data = response.data;
-        console.log("Password matches " + data["passwordMatches"]);
-        if (data["passwordMatches"] === undefined) {
-          
-        } else if (data["passwordMatches"] === true) {
+        const responseBody = response.data;
+        console.log("Access Token: " + responseBody["access_token"]);
+        if (responseBody["access_token"] !== undefined) {
+          console.log("Let's navigate to /dashboard!");
           navigate("/dashboard");
+        } else {
+          console.log("showError: " + showError);
         }
       })
       .catch((error) => {
@@ -36,7 +44,9 @@ export const LoginForm = () => {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
           // console.log(error.response.data);
-          // console.log(error.response.status);
+          console.log(error.response.status);
+          setShowError(true);
+          console.log("showError: " + showError);
           // console.log(error.response.headers);
         } else if (error.request) {
           // The request was made but no response was received
@@ -48,7 +58,6 @@ export const LoginForm = () => {
           // Something happened in setting up the request that triggered an Error
           console.log("Error", error.message);
         }
-        console.log(error.config);
       });
   };
 
@@ -57,7 +66,8 @@ export const LoginForm = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <h1>⚔️ Defend Me</h1>
         <div className="input-box">
-          <input {...register("email")}
+          <input
+            {...register("email")}
             type="email"
             placeholder="Email"
             required
@@ -65,31 +75,16 @@ export const LoginForm = () => {
           <FaUser className="icon" />
         </div>
         <div className="input-box">
-          <input {...register("password")}
+          <input
+            {...register("password")}
             type="password"
             placeholder="Password"
             required
           />
           <FaLock className="icon" />
+          <span>{showError && "Invalid email or password"}</span>
         </div>
-
-        <div className="remember-forgot">
-          <label>
-            <input {...register("rememberMe")}
-              type="checkbox"
-            />
-            Remember me
-          </label>
-          <a href="#">Forgot password?</a>
-        </div>
-
         <button type="submit">Login</button>
-
-        {/* <div className="register-link">
-          <p>
-            Don't have an account? <a href="#">Register</a>
-          </p>
-        </div> */}
       </form>
     </div>
   );

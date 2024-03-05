@@ -123,221 +123,237 @@ def testProtected():
 
 @app.route("/employee/<email>", methods=['GET'])
 def getEmployeeByEmail(email):
-    req_args = request.view_args
-    print('req_args: ', req_args)
+    if request.method == "OPTIONS": # CORS preflight
+        return _build_cors_preflight_response()
+    elif request.method == "GET": # The actual request following the preflight
+        req_args = request.view_args
+        print('req_args: ', req_args)
 
-    db_file = 'database.db'
-    os.chdir('../sql-database/')
-    db_connection = sqlite3.connect(os.path.join(os.path.abspath(os.curdir), db_file))
+        db_file = 'database.db'
+        os.chdir('../sql-database/')
+        db_connection = sqlite3.connect(os.path.join(os.path.abspath(os.curdir), db_file))
 
-    cur = db_connection.cursor()
-    cur.execute("SELECT employee_id, name, email, created_date, updated_date FROM employee WHERE email = '%s'" % email)
-    data = cur.fetchone()
-    if (data and len(data) > 0):
-        response = jsonify({ # TODO: I wonder how to improve these to have an object definition interface
-                        'data': {
-                            'employee_id': data[0],
-                            'name': data[1],
-                            'email': data[2],
-                            'created_date': data[3],
-                            'updated_date': data[4]
-                        }
-                    })
-    else:
-        response = jsonify({
-                        'status': 404,
-                        'message': 'No employee found with provided email address.'
-                    })
-    return response
+        cur = db_connection.cursor()
+        cur.execute("SELECT employee_id, name, email, created_date, updated_date FROM employee WHERE email = '%s'" % email)
+        data = cur.fetchone()
+        if (data and len(data) > 0):
+            response = jsonify({ # TODO: I wonder how to improve these to have an object definition interface
+                            'data': {
+                                'employee_id': data[0],
+                                'name': data[1],
+                                'email': data[2],
+                                'created_date': data[3],
+                                'updated_date': data[4]
+                            }
+                        })
+            return _corsify_actual_response(response), 200
+        else:
+            response = jsonify({
+                            'message': 'No employee found with provided email address.'
+                        })
+            return _corsify_actual_response(response), 404
 
 '''
 Returns a list of employees as an array of objects from SQLite
 '''
 @app.route("/employee", methods=['GET'])
 def listAllEmployees():
-    req_args = request.view_args
-    print('req_args: ', req_args)
+    if request.method == "OPTIONS": # CORS preflight
+        return _build_cors_preflight_response()
+    elif request.method == "GET": # The actual request following the preflight
+        req_args = request.view_args
+        print('req_args: ', req_args)
 
-    db_file = 'database.db'
-    oldpwd = os.getcwd()
-    os.chdir("..")
-    os.chdir(os.path.join(os.path.abspath(os.curdir), 'sql-database'))
-    print("Current directory now:" , os.getcwd()) 
-    db_connection = sqlite3.connect(os.path.join(os.path.abspath(os.curdir), db_file))
-    os.chdir(oldpwd)
+        db_file = 'database.db'
+        oldpwd = os.getcwd()
+        os.chdir("..")
+        os.chdir(os.path.join(os.path.abspath(os.curdir), 'sql-database'))
+        print("Current directory now:" , os.getcwd()) 
+        db_connection = sqlite3.connect(os.path.join(os.path.abspath(os.curdir), db_file))
+        os.chdir(oldpwd)
 
-    cur = db_connection.cursor()
-    cur.execute("SELECT employee_id, name, email, created_date, updated_date FROM employee")
-    data = cur.fetchall()
-    employees = []
-    for i in data:
-        employees.append({
-            'employee_id': i[0],
-            'name': i[1],
-            'email': i[2],
-            'created_date': i[3],
-            'updated_date': i[4]
-        })
-
-    if (data and len(data) > 0):
-        response = jsonify({ # TODO: I wonder how to improve these to have an object definition interface
-                        'object': 'list',
-                        'url': '/employee',
-                        'data': employees,
-                        'count': len(data)
-                    })
-    else:
-        response = jsonify({
-                        'status': 404,
-                        'message': 'No employee found with provided email address.'
-                    })
+        cur = db_connection.cursor()
+        cur.execute("SELECT employee_id, name, email, created_date, updated_date FROM employee")
+        data = cur.fetchall()
+        employees = []
+        for i in data:
+            employees.append({
+                'employee_id': i[0],
+                'name': i[1],
+                'email': i[2],
+                'created_date': i[3],
+                'updated_date': i[4]
+            })
         
-    db_connection.close()
-    return response
+        db_connection.close()
+
+        if (data and len(data) > 0):
+            response = jsonify({ # TODO: I wonder how to improve these to have an object definition interface
+                            'object': 'list',
+                            'url': '/employee',
+                            'data': employees,
+                            'count': len(data)
+                        })
+            return _corsify_actual_response(response), 200
+        else:
+            response = jsonify({
+                            'message': 'No employee found with provided email address.'
+                        })
+            return _corsify_actual_response(response), 404
 
 '''
 Creates an Organization Administrator in the database.
 '''
 @app.route("/administrator", methods=['POST'])
 def createAdministrator():
-    db_file = 'database.db'
-    oldpwd = os.getcwd()
-    os.chdir("..")
-    os.chdir(os.path.join(os.path.abspath(os.curdir), 'sql-database'))
-    print("Current directory now:" , os.getcwd()) 
-    db_connection = sqlite3.connect(os.path.join(os.path.abspath(os.curdir), db_file))
-    os.chdir(oldpwd)
+    if request.method == "OPTIONS": # CORS preflight
+        return _build_cors_preflight_response()
+    elif request.method == "POST": # The actual request following the preflight
+        db_file = 'database.db'
+        oldpwd = os.getcwd()
+        os.chdir("..")
+        os.chdir(os.path.join(os.path.abspath(os.curdir), 'sql-database'))
+        print("Current directory now:" , os.getcwd()) 
+        db_connection = sqlite3.connect(os.path.join(os.path.abspath(os.curdir), db_file))
+        os.chdir(oldpwd)
 
-    cur = db_connection.cursor()
-    parsedBody = request.json
-    email = parsedBody["email"]
-    password = parsedBody["password"]
-    
-    try:
-        cur.execute("INSERT INTO administrator (email, password) VALUES (?, ?)",
-                        (email.lower(), passwordUtils.encrpytPassword(password))
+        cur = db_connection.cursor()
+        parsedBody = request.json
+        email = parsedBody["email"]
+        password = parsedBody["password"]
+        
+        try:
+            cur.execute("INSERT INTO administrator (email, password) VALUES (?, ?)",
+                            (email.lower(), passwordUtils.encrpytPassword(password))
+                            )
+        except:
+            return jsonify({
+                'message': 'Administrator already exists.'}), 409
+        
+        db_connection.commit()
+        
+        # Relationship tables
+        try:
+            cur.execute("SELECT a.administrator_id, e.employee_id from administrator a inner join employee e on e.employee_id = a.administrator_id where a.email = '%s'" % email)
+            data = cur.fetchone()
+            admin_id = data[0]
+            employee_id = data[1]
+        except:
+            return jsonify({
+                'message': 'Employee email does not exist.'}), 400
+        
+        cur.execute("INSERT INTO admin_access (admin_id, employee_id) VALUES (?, ?)",
+                        (admin_id, employee_id)
                         )
-    except:
-        return jsonify({
-            'message': 'Administrator already exists.'}), 409
-    
-    db_connection.commit()
-    
-    # Relationship tables
-    try:
-        cur.execute("SELECT a.administrator_id, e.employee_id from administrator a inner join employee e on e.employee_id = a.administrator_id where a.email = '%s'" % email)
+        
+        db_connection.commit()
+        
+        cur.execute("SELECT administrator_id, email, created_date from administrator where email = '%s'" % email)
         data = cur.fetchone()
-        admin_id = data[0]
-        employee_id = data[1]
-    except:
-        return jsonify({
-            'message': 'Employee email does not exist.'}), 400
-    
-    cur.execute("INSERT INTO admin_access (admin_id, employee_id) VALUES (?, ?)",
-                    (admin_id, employee_id)
-                    )
-    
-    db_connection.commit()
-    
-    cur.execute("SELECT administrator_id, email, created_date from administrator where email = '%s'" % email)
-    data = cur.fetchone()
-    administrator_id = data[0]
-    email = data[1]
-    created_date = data[2]
-    
-    db_connection.close()
+        administrator_id = data[0]
+        email = data[1]
+        created_date = data[2]
+        
+        db_connection.close()
 
-    if (data and len(data) > 0):
-        return jsonify({ # TODO: I wonder how to improve these to have an object definition interface
-                        "administrator_id": administrator_id,
-                        "email": email,
-                        "created_date": created_date
-                    }), 200
-    else:
-        return jsonify({
-                        'message': 'Failed to create administrator.'
-                    }), 422
+        if (data and len(data) > 0):
+            response = jsonify({ # TODO: I wonder how to improve these to have an object definition interface
+                            "administrator_id": administrator_id,
+                            "email": email,
+                            "created_date": created_date
+                        })
+            return _corsify_actual_response(response), 200
+        else:
+            response = jsonify({
+                            'message': 'Failed to create administrator.'
+                        })
+            return _corsify_actual_response(response), 422
 
 @app.route("/device", methods=['GET'])
 def listAllDevices():
-    req_args = request.view_args
-    print('req_args: ', req_args)
+    if request.method == "OPTIONS": # CORS preflight
+        return _build_cors_preflight_response()
+    elif request.method == "GET": # The actual request following the preflight
+        req_args = request.view_args
+        print('req_args: ', req_args)
 
-    db_file = 'database.db'
-    oldpwd = os.getcwd()
-    os.chdir("..")
-    os.chdir(os.path.join(os.path.abspath(os.curdir), 'sql-database'))
-    print("Current directory now:" , os.getcwd()) 
-    db_connection = sqlite3.connect(os.path.join(os.path.abspath(os.curdir), db_file))
-    os.chdir(oldpwd)
+        db_file = 'database.db'
+        oldpwd = os.getcwd()
+        os.chdir("..")
+        os.chdir(os.path.join(os.path.abspath(os.curdir), 'sql-database'))
+        print("Current directory now:" , os.getcwd()) 
+        db_connection = sqlite3.connect(os.path.join(os.path.abspath(os.curdir), db_file))
+        os.chdir(oldpwd)
 
-    cur = db_connection.cursor()
-    cur.execute("SELECT device_id, model, unique_device_identifier, employee_id FROM device")
-    data = cur.fetchall()
-    devices = []
-    for i in data:
-        devices.append({
-            'device_id': i[0],
-            'model': i[1],
-            'unique_device_identifier': i[2],
-            'employee_id': i[3]
-        })
-    if (data and len(data) > 0):
-        response = jsonify({ # TODO: I wonder how to improve these to have an object definition interface
-                        'object': 'list',
-                        'url': '/device',
-                        'data': devices
-                    })
-    else:
-        response = jsonify({
-                        'status': 404,
-                        'message': 'No scans found with provided query parameters.'
-                    })
-    return response
+        cur = db_connection.cursor()
+        cur.execute("SELECT device_id, model, unique_device_identifier, employee_id FROM device")
+        data = cur.fetchall()
+        devices = []
+        for i in data:
+            devices.append({
+                'device_id': i[0],
+                'model': i[1],
+                'unique_device_identifier': i[2],
+                'employee_id': i[3]
+            })
+        if (data and len(data) > 0):
+            response = jsonify({ # TODO: I wonder how to improve these to have an object definition interface
+                            'object': 'list',
+                            'url': '/device',
+                            'data': devices
+                        })
+            return _corsify_actual_response(response), 200
+        else:
+            response = jsonify({
+                            'message': 'No scans found with provided query parameters.'
+                        })
+            return _corsify_actual_response(response), 404
 
-@app.route("/scan", methods=['GET'])
-@cross_origin
+@app.route("/scan", methods=['GET', 'OPTIONS'])
 def listAllScans():
     print("server::listAllScans()")
-    db_file = 'database.db'
-    oldpwd = os.getcwd()
-    print("Current directory now:" , oldpwd) 
-    os.chdir("..")
-    os.chdir(os.path.join(os.path.abspath(os.curdir), 'sql-database'))
-    print("Current directory now:" , os.getcwd()) 
-    db_connection = sqlite3.connect(os.path.join(os.path.abspath(os.curdir), db_file))
-    os.chdir(oldpwd)
+    if request.method == "OPTIONS": # CORS preflight
+        return _build_cors_preflight_response()
+    elif request.method == "GET": # The actual request following the preflight
+        db_file = 'database.db'
+        oldpwd = os.getcwd()
+        print("Current directory now:" , oldpwd) 
+        os.chdir("..")
+        os.chdir(os.path.join(os.path.abspath(os.curdir), 'sql-database'))
+        print("Current directory now:" , os.getcwd()) 
+        db_connection = sqlite3.connect(os.path.join(os.path.abspath(os.curdir), db_file))
+        os.chdir(oldpwd)
 
-    sql = "SELECT scan_id, os_version, app_version, secure, threats, device_id, created_date FROM scan"
-    secure = request.args.get('secure')
-    if (len(secure) > 0):
-        sql = sql + " WHERE secure = %s" % secure
+        sql = "SELECT scan_id, os_version, app_version, secure, threats, device_id, created_date FROM scan"
+        secure = request.args.get('secure')
+        if (len(secure) > 0):
+            sql = sql + " WHERE secure = %s" % secure
 
-    cur = db_connection.cursor()
-    cur.execute(sql)
-    data = cur.fetchall()
-    scans = []
-    for i in data:
-        scans.append({
-            'scan_id': i[0],
-            'os_version': i[1],
-            'app_version': i[2],
-            'secure': i[3],
-            'threats': i[4],
-            'device_id': i[5],
-            'created_date': i[6]
-        })
-    if (data and len(data) > 0):
-        response = jsonify({ # TODO: I wonder how to improve these to have an object definition interface
-                        'object': 'list',
-                        'url': '/scans',
-                        'data': scans
-                    })
-    else:
-        response = jsonify({
-                        'message': 'No scans found with provided query parameters.'
-                    })
-    return response
+        cur = db_connection.cursor()
+        cur.execute(sql)
+        data = cur.fetchall()
+        scans = []
+        for i in data:
+            scans.append({
+                'scan_id': i[0],
+                'os_version': i[1],
+                'app_version': i[2],
+                'secure': i[3],
+                'threats': i[4],
+                'device_id': i[5],
+                'created_date': i[6]
+            })
+        if (data and len(data) > 0):
+            response = jsonify({ # TODO: I wonder how to improve these to have an object definition interface
+                            'object': 'list',
+                            'url': '/scans',
+                            'data': scans
+                        })
+        else:
+            response = jsonify({
+                            'message': 'No scans found with provided query parameters.'
+                        })
+        return response
 
 def _build_cors_preflight_response():
     response = make_response()
