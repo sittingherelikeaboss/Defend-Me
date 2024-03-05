@@ -9,7 +9,7 @@
     - [Enterprise Dashboard](#enterprise-dashboard)
 3. [Backend APIs](#backend-apis)
     - [Postman Collection](#postman-collection)
-    - [Authentication](#authentication)\
+    - [Authentication](#authentication)
         - [Login](#login)
         - [Logout](#logout)
     - [Core Resources](#core-resources)
@@ -23,8 +23,9 @@
         - [Windows](#windows-bash)
         - [Troubleshooting](#troubleshooting)
             - [Cross-Origin Request Blocked and CORS issues](#cross-origin-request-blocked-and-cors-issues)
-5. [Nice to Haves / Bugs](#nice-to-haves--bugs)
-6. [Credits](#credits)
+5. [Nice to Haves](#nice-to-haves--bugs)
+6. [Bugs](#bugs)
+7. [Credits](#credits)
 
 ## 📖 Description
 
@@ -467,7 +468,8 @@ Due to time constraints of this project, there are some nice to haves and things
 3. Adding pagination to the front-end. Although I have code in the backend to do pagination for scans, I need more time to research how to do it on React.
 4. Logout button.
 5. Host it.
-5. Hashed email and password in the frontend.
+6. Hashed email and password in the frontend.
+7. **TEST CASES FOR PYTHON AND React component files!**
 
 ## Bugs
 
