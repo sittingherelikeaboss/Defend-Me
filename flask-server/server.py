@@ -352,6 +352,46 @@ def listAllDevices():
                             'message': 'No scans found with provided query parameters.'
                         })
             return _corsify_actual_response(response), 404
+        
+@app.route("/device/<employeeId>", methods=['GET'])
+def getDeviceByEmployeeId(employeeId):
+    if request.method == "OPTIONS": # CORS preflight
+        return _build_cors_preflight_response()
+    elif request.method == "GET": # The actual request following the preflight
+        req_args = request.view_args
+        print('req_args: ', req_args)
+
+        db_file = 'database.db'
+        oldpwd = os.getcwd()
+        os.chdir("..")
+        os.chdir(os.path.join(os.path.abspath(os.curdir), 'sql-database'))
+        print("Current directory now:" , os.getcwd()) 
+        db_connection = sqlite3.connect(os.path.join(os.path.abspath(os.curdir), db_file))
+        os.chdir(oldpwd)
+
+        cur = db_connection.cursor()
+        cur.execute("SELECT device_id, model, unique_device_identifier, employee_id FROM device where employee_id = %s" % employeeId)
+        data = cur.fetchall()
+        devices = []
+        for i in data:
+            devices.append({
+                'device_id': i[0],
+                'model': i[1],
+                'unique_device_identifier': i[2],
+                'employee_id': i[3]
+            })
+        if (data and len(data) > 0):
+            response = jsonify({ # TODO: I wonder how to improve these to have an object definition interface
+                            'object': 'list',
+                            'url': '/device',
+                            'data': devices
+                        })
+            return _corsify_actual_response(response), 200
+        else:
+            response = jsonify({
+                            'message': 'No scans found with provided query parameters.'
+                        })
+            return _corsify_actual_response(response), 404
 
 @app.route("/scan", methods=['GET', 'OPTIONS'])
 def listAllScans():

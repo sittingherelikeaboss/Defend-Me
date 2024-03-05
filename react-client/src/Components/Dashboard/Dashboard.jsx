@@ -7,16 +7,22 @@ import { useForm } from "react-hook-form";
 export const Dashboard = () => {
   const [employeeData, setEmployeeData] = useState([{}]);
   const [scannedData, setScannedData] = useState([{}]);
+  const [deviceData, setDeviceData] = useState([{}]);
+
   const [filterKey, setFilterKey] = useState("device_id");
   const [filterValue, setFilterValue] = useState(undefined);
   const [deviceId, setDeviceId] = useState(undefined);
   const [appVersion, setAppVersion] = useState(undefined);
   const [employeeEmail, setEmployeeEmail] = useState();
+  const [employeeId, setEmployeeId] = useState(undefined);
 
   const { register, handleSubmit: handleSubmitScanFilter } = useForm();
 
   // Here we set which endpoint for employee query to use. Default to the /employee
   const [employeeEndpoint, setEmployeeEndpoint] = useState("/employee");
+
+  // Here we set which endpoint for employee query to use. Default to the /device
+  const [deviceEndpoint, setDeviceEndpoint] = useState("/device");
 
   const onSubmitScanFilter = async (formData) => {
     setFilterValue(formData["filterValue"]); // TODO: why this isn't working?
@@ -36,6 +42,16 @@ export const Dashboard = () => {
     if (employeeEmail) { // List all employees by Email Address
       setEmployeeEndpoint(`/employee/email/${employeeEmail}`);
       console.log(employeeEndpoint);
+    }
+  };
+
+  const onSubmitDevice = async (formData) => {
+    setEmployeeId(formData["employeeId"]);
+    console.log("employeeId",employeeId);
+    if (employeeId) {
+      // Set endpoint to list devices by employee ID
+      setDeviceEndpoint(`/device/${employeeId}`);
+      console.log("deviceEndpoint",deviceEndpoint);
     }
   };
 
@@ -112,7 +128,43 @@ export const Dashboard = () => {
         }
         console.log(error.config);
       });
-  }, [deviceId]);
+  }, [employeeId]);
+
+  useEffect(() => {
+    console.log("Dashboard::useEffect device runs");
+    axios
+      .get(`${API_URL}${deviceEndpoint}`, {
+        params: {},
+        headers: {
+          "Access-Control-Allow-Origins": "*", // Adds CORS header to the request?
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        const devices = response.data;
+        setDeviceData(devices.data);
+      })
+      .catch((error) => {
+        // Error
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          // console.log(error.response.data);
+          // console.log(error.response.status);
+          // console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the
+          // browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Error", error.message);
+        }
+        console.log(error.config);
+      });
+  }, [deviceEndpoint]);
 
   return (
     <>
@@ -203,6 +255,34 @@ export const Dashboard = () => {
                 <td>{item.email}</td>
                 <td>{item.created_date}</td>
                 <td>{item.updated_date}</td>
+              </tr>
+            ))}
+          </table>
+        </div>
+      </form>
+
+
+
+      <div className="compromised-devices-header">
+        <h2>Devices</h2>
+      </div>
+      <form onSubmit={handleSubmitScanFilter(onSubmitDevice)}>
+        <div className="compromised-devices-table">
+          <input placeholder="Enter Employee ID" {...register("employeeId")} />
+          <button type="submit">Enter</button>
+          <table>
+            <tr>
+              <th>Device ID</th>
+              <th>Model</th>
+              <th>Unique Device Identifier</th>
+              <th>Employee ID</th>
+            </tr>
+            {deviceData.map((item, index) => (
+              <tr key={index}>
+                <td>{item.device_id}</td>
+                <td>{item.model}</td>
+                <td>{item.unique_device_identifier}</td>
+                <td>{item.employee_id}</td>
               </tr>
             ))}
           </table>
