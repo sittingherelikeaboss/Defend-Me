@@ -9,8 +9,15 @@
     - [Enterprise Dashboard](#enterprise-dashboard)
 3. [Backend APIs](#backend-apis)
     - [Postman Collection](#postman-collection)
-    - [Authentication](#authentication)
+    - [Authentication](#authentication)\
+        - [Login](#login)
+        - [Logout](#logout)
     - [Core Resources](#core-resources)
+        - [List all employees](#list-all-employees)
+        - [Retrieve employees by email](#retrieve-employee-by-email)
+        - [List all devices](#list-all-devices)
+        - [Get devices by employee ID](#get-devices-by-employee-id)
+        - [List all scans](#list-all-scans)
 4. [Developer Instructions](#developer-instructions)
     - [Local](#local)
         - [Windows](#windows-bash)
@@ -168,6 +175,45 @@ Response Body:
 }
 ```
 
+HTTP Status Code Summary
+
+HTTS Status | Code Summary | Details
+--- | --- | ---
+200 | OK | Everything worked as expected.
+500 | Server Error | Something went wrong on Defend Me's end.
+
+#### Retrieve employee by name keyword or substring
+
+Returns an employee by a substring of the full name. (e.g. "oolong" will return "Oolong Teaman" employee).
+
+Endpoint: GET `/employee/name/<keyword>`
+
+Response Body: 
+
+```json
+{
+    "count": 1,
+    "data": [
+        {
+            "created_date": "2024-03-03 04:43:04",
+            "email": "norma.fisher@helloworld.io",
+            "employee_id": 1,
+            "name": "Norma Fisher",
+            "updated_date": null
+        }
+    ],
+    "object": "list",
+    "url": "/employee"
+}
+```
+
+HTTP Status Code Summary
+
+HTTS Status | Code Summary | Details
+--- | --- | ---
+200 | OK | Everything worked as expected.
+500 | Server Error | Something went wrong on Defend Me's end.
+
 #### List All Devices
 
 Returns a list of devices.
@@ -184,6 +230,42 @@ Response Body:
             "employee_id": 97,
             "model": "Apple iPad Mini",
             "unique_device_identifier": "7d69e94b-3903-48ac-8633-806c8ebae17b"
+        },
+    ],
+    "object": "list",
+    "url": "/device"
+}
+```
+
+HTTP Status Code Summary
+
+HTTS Status | Code Summary | Details
+--- | --- | ---
+200 | OK | Everything worked as expected.
+500 | Server Error | Something went wrong on Defend Me's end.
+
+#### Get Devices by Employee ID
+
+Returns a list of devices by Employee ID parameter.
+
+Endpoint: GET `/device/<employeeId>`
+
+Response Body: 
+
+```json
+{
+    "data": [
+        {
+            "device_id": 79,
+            "employee_id": 12,
+            "model": "Apple iPhone 15",
+            "unique_device_identifier": "77ec4a6f-dcd4-4e66-896c-a6353c4e368c"
+        },
+        {
+            "device_id": 150,
+            "employee_id": 12,
+            "model": "Apple iPhone 15 Pro",
+            "unique_device_identifier": "36c07a03-8a60-48cf-9b84-d7801dbe4de7"
         },
     ],
     "object": "list",
