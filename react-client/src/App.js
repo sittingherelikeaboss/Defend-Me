@@ -10,8 +10,8 @@ import {
 
 // Import LoginForm component
 import { LoginForm } from "./Components/LoginForm/LoginForm";
-
 import { Dashboard } from "./Components/Dashboard/Dashboard";
+import { NoFoundComponent } from "./Components/NoFoundComponent/NoFoundComponent";
 
 function App() {
   
@@ -22,6 +22,7 @@ function App() {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/*" element={<NoFoundComponent />} />
       </Routes>
     </Router>
     </>
