@@ -38,7 +38,11 @@ The user is greeted with a login screen. This prevents anyone from accessing the
 
 ### Enterprise Dashboard
 
-🚧 Work in progress 🚧
+![dashboard screen](./demo/screenshots/DashboardScreen.PNG)
+
+We can filter the scans based on Email Address of the device employee owner, Device ID and App Version.
+
+![dashboard filter](./demo/screenshots/DashboardScreen_Filter.PNG)
 
 ## 👩‍💻 Developer Instructions
 
