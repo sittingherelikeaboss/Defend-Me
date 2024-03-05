@@ -50,6 +50,8 @@ We can filter the scans based on Email Address of the device employee owner, Dev
 
 ![dashboard filter](./demo/screenshots/DashboardScreen_Filter.PNG)
 
+![more dashboard](./demo/screenshots/DashboardScreen2.PNG)
+
 ## Backend APIs
 
 > [!NOTE]
