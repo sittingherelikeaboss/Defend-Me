@@ -21,6 +21,7 @@
 4. [Developer Instructions](#developer-instructions)
     - [Local](#local)
         - [Windows](#windows-bash)
+        - [MacOS](#macos)
         - [Troubleshooting](#troubleshooting)
             - [Cross-Origin Request Blocked and CORS issues](#cross-origin-request-blocked-and-cors-issues)
 5. [Nice to Haves](#nice-to-haves--bugs)
@@ -395,6 +396,12 @@ cd flask-server
 pip install -r requirements.txt
 ```
 
+or 
+
+```
+pip3 install -r requirements.txt
+```
+
 8. Run the commands below to initialise the database with seeded data.
 
 ```
@@ -456,6 +463,49 @@ npm install
 ```
 npm start
 ```
+
+#### MacOS
+
+1. Ensure you have Node.js and npm installed in your machine. Check by running the following commands.
+
+```
+npm -v
+```
+
+```
+node -v
+```
+
+If you do not have Node.js, install using Homebrew [here](https://formulae.brew.sh/formula/node).
+
+2. Ensure you have Python installed.
+
+```
+python --version
+```
+
+or
+
+```
+python3 --version
+```
+
+If you do not have Python, go ahead and install it from [here](https://www.python.org/). MacOS usually already comes with Python 2.X or 3. If you have Python 2.X, please use 3.
+
+3. Ensure you have `pip` installed and [virtual environment](https://docs.python.org/3/library/venv.html) in `flask-server` folder.
+
+```
+pip --version
+```
+
+or
+
+```
+pip3 --version
+```
+
+If you do not have `pip`, go ahead and refer to this [documentation](https://pypi.org/project/pip/).
+
 
 #### Troubleshooting
 
