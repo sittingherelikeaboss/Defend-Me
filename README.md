@@ -361,6 +361,12 @@ If you do not have Python, go ahead and install it from [here](https://www.pytho
 pip --version
 ```
 
+or
+
+```
+pip3 --version
+```
+
 If you do not have `pip`, go ahead and refer to this [documentation](https://pypi.org/project/pip/).
 
 4. You will need to install Apache 24 into your local machine. Follow instructions [here](https://httpd.apache.org/docs/current/platform/windows.html#down). **Troubleshooting:** If you get this error `AH00558: httpd.exe: Could not reliably determine the server's fully qualified domain name, using ::1. Set the 'ServerName' directive globally to suppress this message`, try these commands:
@@ -385,6 +391,7 @@ If you do not have `pip`, go ahead and refer to this [documentation](https://pyp
 7. Once you have Python installed, you will need these following Python packages in `requirements.txt`. Run the following command to install them.
 
 ```
+cd flask-server
 pip install -r requirements.txt
 ```
 
@@ -392,9 +399,6 @@ pip install -r requirements.txt
 
 ```
 cd sql-database
-```
-
-```
 python init_db.sql
 ```
 
