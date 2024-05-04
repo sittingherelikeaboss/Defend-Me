@@ -30,8 +30,6 @@
 
 ## 📖 Description
 
-This is a take-home project for a technical interview for a company.
-
 This application is written in Python for the Flask backend and React.js for the frontend.
 
 ## Functionality
